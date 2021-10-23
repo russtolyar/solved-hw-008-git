@@ -25,6 +25,7 @@ public class MainClass {
     public static void main(String[] args) {
 
         LOGGER.debug("Hello again");
+        LOGGER.debug("Hello Master");
         LOGGER.debug("Посчитать площадь всех стен в доме, Массивы, Несколько вложенных циклов\n");
 
         Element<String> elementOne = new Element<>(0.2, 0.1, "Brick", "Gost1");
