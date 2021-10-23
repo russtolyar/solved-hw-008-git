@@ -5,13 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.solvd</groupId>
-    <artifactId>solvd-seven</artifactId>
+    <artifactId>hw007</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
         <log4jVersion>2.14.1</log4jVersion>
     </properties>
 
