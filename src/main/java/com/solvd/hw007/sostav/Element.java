@@ -14,26 +14,53 @@ public class Element<T> {
     private double length;
     private double height;
     private String material;
+    ElementMaterial elementMaterial;
     private T gost;
 
     public Element() {
     }
 
-    public Element(double length, double height, String material, T gost) {
+    public Element(double length, double height, ElementMaterial elementMaterial, T gost) {
         this.length = length;
-        if (height < 0.1 || height > 5) {
-            throw new ElementHeightException("Impossible height");
-        }
+//        if (height < 0.1 || height > 5) {
+//            throw new ElementHeightException("Impossible height");
         this.height = height;
-        if (material.contains("_")) {
-            throw new MaterialInvalidException("Material is invalid");
-        }
-        this.material = material;
+        this.elementMaterial = elementMaterial;
         this.gost = gost;
     }
 
+    //    public Element(double length, double height, String material, T gost) {
+//        this.length = length;
+//        if (height < 0.1 || height > 5) {
+//            throw new ElementHeightException("Impossible height");
+//        }
+//        this.height = height;
+////        if (material.contains("_")) {
+////            throw new MaterialInvalidException("Material is invalid");
+////        }
+//        this.material = material;
+//        this.gost = gost;
+//    }
+
     public void printMaterialInfo() {
-        LOGGER.debug(" this material is " + material + " It's length and height  are - " + length + " - " + height);
+switch (elementMaterial) {
+    case BETON:
+        LOGGER.debug("The Cheapest material is " + elementMaterial + " IT's - "
+                + elementMaterial.getDescription()
+                + " \nIt's length and height  are - " + length + " - " + height);
+        break;
+    case BRICK:
+        LOGGER.debug("Best material " + elementMaterial + " is used here. IT's - " + elementMaterial.getDescription()
+                + " \nIt's length and height  are - " + length + " - " + height);
+        break;
+    case STEEL:
+        LOGGER.debug("The most expensive material is " + elementMaterial + " IT's - " + elementMaterial.getDescription()
+                + " \nIt's length and height  are - " + length + " - " + height);
+        break;
+    case WOODEN:
+        LOGGER.debug("Eco material is " + elementMaterial + " IT's - " + elementMaterial.getDescription()
+                + " \nIt's length and height  are - " + length + " - " + height);
+    }
     }
 
     public double getLength() {
@@ -63,23 +90,32 @@ public class Element<T> {
         this.gost = gost;
     }
 
-    public String getMaterial() {
-        return material;
+    public ElementMaterial getElementMaterial() {
+        return elementMaterial;
     }
 
-    public void setMaterial(String material) {
-        if (material.contains("_")) {
-            throw new MaterialInvalidException("Material is invalid");
-        }
-        this.material = material;
+    public void setElementMaterial(ElementMaterial elementMaterial) {
+        this.elementMaterial = elementMaterial;
     }
+
+//    public String getMaterial() {
+//        return material;
+//    }
+//
+//    public void setMaterial(String material) {
+//        if (material.contains("_")) {
+//            throw new MaterialInvalidException("Material is invalid");
+//        }
+//        this.material = material;
+//    }
 
     @Override
     public String toString() {
         return "This Element" +
                 "length=" + length +
                 ", height=" + height +
-                ", material='" + material + '\'' +
+                ", material='" + elementMaterial +
+                ", and it's - " + elementMaterial.getDescription() + '\'' +
                 '}';
     }
 
@@ -88,11 +124,13 @@ public class Element<T> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Element<?> element = (Element<?>) o;
-        return Double.compare(element.length, length) == 0 && Double.compare(element.height, height) == 0 && Objects.equals(material, element.material);
+        return Double.compare(element.length, length) == 0
+                && Double.compare(element.height, height) == 0
+                && Objects.equals(elementMaterial, element.elementMaterial);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(length, height, material);
+        return Objects.hash(length, height, elementMaterial);
     }
 }

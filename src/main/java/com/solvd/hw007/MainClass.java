@@ -4,10 +4,9 @@ import com.solvd.hw007.dom.House;
 import com.solvd.hw007.exception.InvalidAddressException;
 import com.solvd.hw007.exception.InvalidCountStageException;
 import com.solvd.hw007.flat.Flat;
-import com.solvd.hw007.room.Ceiling;
-import com.solvd.hw007.room.Floor;
-import com.solvd.hw007.room.Room;
+import com.solvd.hw007.room.*;
 import com.solvd.hw007.sostav.Element;
+import com.solvd.hw007.sostav.ElementMaterial;
 import com.solvd.hw007.sostav.Wall;
 import com.solvd.hw007.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +16,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.solvd.hw007.room.CeilingColor.*;
+import static com.solvd.hw007.room.FloorCoverMaterial.*;
+import static com.solvd.hw007.sostav.ElementMaterial.*;
 
 public class MainClass {
 
@@ -29,17 +32,17 @@ public class MainClass {
         LOGGER.debug("Hello Master");
         LOGGER.debug("Посчитать площадь всех стен в доме, Массивы, Несколько вложенных циклов\n");
 
-        Element<String> elementOne = new Element<>(0.2, 0.1, "Brick", "Gost1");
-        Element<Double> elementTwo = new Element<>(5, 2, "Beton", 3.14);
-        Element<String> elementThree = new Element<>(6, 2, "Cement", "Gost33");
-        Element<Integer> elementFour = new Element<>(4, 2, "Steel", 12345);
-        elementOne.printMaterialInfo();
+        Element<String> elementOne = new Element<>(0.2, 0.1, BRICK, "Gost1");
+        Element<Double> elementTwo = new Element<>(5, 2, BETON, 3.14);
+        Element<String> elementThree = new Element<>(6, 2, WOODEN, "Gost33");
+        Element<Integer> elementFour = new Element<>(4, 2, STEEL, 12345);
+        elementThree.printMaterialInfo();
 
-        Map<String, String> elementColorMap = new HashMap<>();
-        elementColorMap.put(elementOne.getMaterial(), "Red");
-        elementColorMap.put(elementTwo.getMaterial(), "Grey");
-        elementColorMap.put(elementThree.getMaterial(), "Green");
-        elementColorMap.put(elementFour.getMaterial(), "Black");
+        Map<ElementMaterial, String> elementColorMap = new HashMap<>();
+        elementColorMap.put(elementOne.getElementMaterial(), "Red");
+        elementColorMap.put(elementTwo.getElementMaterial(), "Grey");
+        elementColorMap.put(elementThree.getElementMaterial(), "Green");
+        elementColorMap.put(elementFour.getElementMaterial(), "Black");
         System.out.println("\n\nelementColorMap \n " + elementColorMap + "\n");
 
         List<Element<?>> elements = new ArrayList<>();
@@ -63,9 +66,10 @@ public class MainClass {
 
         LOGGER.debug("\n");
 
-        Floor floorOne = new Floor("wood", false);
+        Floor floorOne = new Floor(false, WOOD);
         floorOne.turnOn();
-        Ceiling ceilingOne = new Ceiling(true, "Pink");
+        floorOne.floorCoverInfo();
+        Ceiling ceilingOne = new Ceiling(true, PINK);
         Room roomOne = new Room(wallsOne, floorOne, ceilingOne, "Bed-room");
 
         Wall wallFive = new Wall(elementTwo, 1);
@@ -77,8 +81,8 @@ public class MainClass {
         wallsTwo.add(wallSix);
         wallsTwo.add(wallSeven);
 
-        Floor floorTwo = new Floor("Laminat", true);
-        Ceiling ceilingTwo = new Ceiling(true, "white");
+        Floor floorTwo = new Floor( true, LAMINAT);
+        Ceiling ceilingTwo = new Ceiling(true, WHITE);
         ceilingTwo.toColor();
         Room roomTwo = new Room(wallsTwo, floorTwo, ceilingTwo, "Living-room");
         LOGGER.debug(roomTwo.toPaint());
@@ -97,9 +101,10 @@ public class MainClass {
         wallsThree.add(wallEight);
         wallsThree.add(wallNine);
 
-        Floor floorThree = new Floor("Lenoleum", false);
-        Ceiling ceilingThree = new Ceiling(true, "Yellow");
+        Floor floorThree = new Floor( false, LENOLEUM);
+        Ceiling ceilingThree = new Ceiling(true, GREEN);
         Room room3 = new Room(wallsThree, floorThree, ceilingThree, "Dinning-room");
+        floorThree.floorCoverInfo();
 
         List<Room> roomsTwo = new ArrayList<>();
         roomsTwo.add(room3);
@@ -152,9 +157,7 @@ public class MainClass {
 
         LOGGER.debug("        -----       -----        ----           ");
 
-        LOGGER.debug("\n");
-        roomOne.printRoomInfo();
-        roomTwo.printRoomInfo(elementOne.getMaterial());
+       roomTwo.printRoomInfo(elementOne.getElementMaterial().toString() + " and it is " + elementOne.getElementMaterial().getDescription());
 
         LOGGER.debug("\n");
         ceilingOne.printCeilInfo();

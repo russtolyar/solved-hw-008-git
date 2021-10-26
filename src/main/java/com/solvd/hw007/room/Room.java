@@ -50,13 +50,14 @@ public class Room implements Paintable {
 
     public void printRoomInfo() {
         LOGGER.debug("\n\nThis room " + roomType + " walls area is " + roomWallsAreaCalc()
-                + " \n It's Floor is " + floor.getMaterial() + " and it's ceiling " + ceiling.getColor());
+                + " \n It's Floor is " + floor.floorCoverMaterial + " and it's ceiling "
+                + ceiling.ceilingColor);
     }
 
     public void printRoomInfo(String wallMaterial) {
         LOGGER.debug("\n\nThis room " + roomType + " walls area is " + roomWallsAreaCalc()
                 + "It's walls material is " + wallMaterial
-                + " \n It's Floor is " + floor.getMaterial() + " and it's ceiling " + ceiling.getColor());
+                + " \n It's Floor is " + floor.floorCoverMaterial + " and it's ceiling " + ceiling.ceilingColor);
     }
 
     public List<Wall> getWalls() {

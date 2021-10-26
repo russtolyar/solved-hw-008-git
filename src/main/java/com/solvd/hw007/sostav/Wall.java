@@ -4,6 +4,7 @@ import com.solvd.hw007.room.Colorable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Wall implements Colorable {
@@ -65,4 +66,5 @@ public class Wall implements Colorable {
     public int hashCode() {
         return Objects.hash(element, countElement);
     }
+
 }

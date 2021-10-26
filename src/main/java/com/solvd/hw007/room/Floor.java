@@ -5,16 +5,29 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
+import static com.solvd.hw007.room.FloorCoverMaterial.*;
+
 public class Floor implements Heatable {
 
     private static final Logger LOGGER = LogManager.getLogger(Floor.class);
 
-    private String material;
+    FloorCoverMaterial floorCoverMaterial;
     private Boolean hasHeat;
 
-    public Floor(String material, Boolean hasHeat) {
-        this.material = material;
+    public Floor(Boolean hasHeat, FloorCoverMaterial floorCoverMaterial) {
         this.hasHeat = hasHeat;
+        this.floorCoverMaterial = floorCoverMaterial;
+    }
+
+    public void floorCoverInfo() {
+        if (WOOD.equals(floorCoverMaterial)) {
+            LOGGER.debug("This floor cover is natural. It's - " + WOOD);
+            WOOD.toLay();
+        } else if (LAMINAT.equals(floorCoverMaterial)) {
+            LOGGER.debug("This floor cover is semi-natural. It's - " + LAMINAT);
+        } else {
+            LOGGER.debug("This floor cover is synthetics. It's - " + LENOLEUM);
+        }
     }
 
     @Override
@@ -24,14 +37,6 @@ public class Floor implements Heatable {
         } else {
             LOGGER.debug("no heater on this floor");
         }
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
     }
 
     public Boolean getHeated() {
@@ -45,7 +50,7 @@ public class Floor implements Heatable {
     @Override
     public String toString() {
         return "Floor{" +
-                "material='" + material + '\'' +
+                "material='" + floorCoverMaterial + '\'' +
                 ", isHeated=" + hasHeat +
                 '}';
     }
@@ -55,11 +60,11 @@ public class Floor implements Heatable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Floor floor = (Floor) o;
-        return Objects.equals(material, floor.material) && Objects.equals(hasHeat, floor.hasHeat);
+        return floorCoverMaterial == floor.floorCoverMaterial && Objects.equals(hasHeat, floor.hasHeat);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(material, hasHeat);
+        return Objects.hash(floorCoverMaterial, hasHeat);
     }
 }
