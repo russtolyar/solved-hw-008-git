@@ -10,24 +10,38 @@ public class Ceiling implements Colorable {
     private static final Logger LOGGER = LogManager.getLogger(Ceiling.class);
 
     private Boolean hasLight;
-    private String color;
+    CeilingColor ceilingColor;
 
-    public Ceiling(boolean hasLight, String color) {
+    public Ceiling(boolean hasLight, CeilingColor ceilingColor) {
         this.hasLight = hasLight;
-        this.color = color;
+        this.ceilingColor = ceilingColor;
     }
 
     public void printCeilInfo() {
-        LOGGER.debug("This ceiling has " + color + " color");
+        switch (ceilingColor) {
+            case RED:
+            case BLUE:
+            case PINK:
+            case WHITE:
+                LOGGER.debug("This ceiling has " + ceilingColor + " color, It's Belorusian");
+                break;
+            case GREEN:
+            case BLACK:
+            case YELLOW:
+                LOGGER.debug("This ceiling has " + ceilingColor + " color. It's imported");
+                break;
+
+        }
     }
 
     @Override
     public void toColor() {
-        LOGGER.debug("The ceiling is colored in " + color + "  Color");
+        LOGGER.debug("The ceiling is colored in " + ceilingColor + "  Color");
     }
 
     public void printCeilInfo(Boolean isLighted) {
-        LOGGER.debug("This ceiling has " + color + " color ; And It well lighted - " + isLighted);
+        LOGGER.debug("This ceiling has " + ceilingColor + " color, It's quality is "
+                + ceilingColor.getQuality() + " ; And It well lighted - " + isLighted);
     }
 
     public boolean isLighted() {
@@ -38,19 +52,19 @@ public class Ceiling implements Colorable {
         hasLight = lighted;
     }
 
-    public String getColor() {
-        return color;
+    public CeilingColor getCeilingColor() {
+        return ceilingColor;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setCeilingColor(CeilingColor ceilingColor) {
+        this.ceilingColor = ceilingColor;
     }
 
     @Override
     public String toString() {
         return "Ceiling{" +
                 "isLighted=" + hasLight +
-                ", color='" + color + '\'' +
+                ", color='" + ceilingColor + '\'' +
                 '}';
     }
 
@@ -59,11 +73,11 @@ public class Ceiling implements Colorable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ceiling ceiling = (Ceiling) o;
-        return Objects.equals(hasLight, ceiling.hasLight) && Objects.equals(color, ceiling.color);
+        return Objects.equals(hasLight, ceiling.hasLight) && Objects.equals(ceilingColor, ceiling.ceilingColor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hasLight, color);
+        return Objects.hash(hasLight, ceilingColor);
     }
 }

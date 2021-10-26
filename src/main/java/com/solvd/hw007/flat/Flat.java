@@ -60,7 +60,7 @@ public class Flat<T> implements Electrisized {
                 "\nThis flat walls area is - " + flatWallsAreaCalc() + "m2" +
                 "\nAnd it can be produced for " + flatTimeProduceCalc() + "seconds" +
                 "\nIt has " + rooms.size() + " rooms " +
-                "\n,rooms=" + rooms.toString() +
+                "\n,rooms=" + rooms +
                 '}';
     }
 
