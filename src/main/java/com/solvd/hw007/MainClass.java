@@ -136,7 +136,7 @@ public class MainClass {
         House<String> house = null;
         try {
 //            houseOne = new House<>("Round", "Liveable", stage, 3, "Brest, Center", false);
-            house = new House<>("Round", "Liveable", stage, 1, "Minsk, Center", "NO");
+            house = new House<>("Round", "Liveable", stage, 1, /*"Minsk, Center",*/ "NO");
         } catch (InvalidCountStageException | InvalidAddressException e) {
             LOGGER.debug("Incorrect number of (count)Stages or Address name.  " + e.getLocalizedMessage(), e);
         } catch (Exception e) {
