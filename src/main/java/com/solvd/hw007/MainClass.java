@@ -1,7 +1,7 @@
 package com.solvd.hw007;
 
+import com.solvd.hw007.dom.Address;
 import com.solvd.hw007.dom.House;
-import com.solvd.hw007.exception.InvalidAddressException;
 import com.solvd.hw007.exception.InvalidCountStageException;
 import com.solvd.hw007.flat.Flat;
 import com.solvd.hw007.room.*;
@@ -27,9 +27,6 @@ public class MainClass {
 
     public static void main(String[] args) {
 
-        LOGGER.debug("Hello. B1 check");
-        LOGGER.debug("Hello again");
-        LOGGER.debug("Hello Master");
         LOGGER.debug("Посчитать площадь всех стен в доме, Массивы, Несколько вложенных циклов\n");
 
         Element<String> elementOne = new Element<>(0.2, 0.1, BRICK, "Gost1");
@@ -81,7 +78,7 @@ public class MainClass {
         wallsTwo.add(wallSix);
         wallsTwo.add(wallSeven);
 
-        Floor floorTwo = new Floor( true, LAMINAT);
+        Floor floorTwo = new Floor(true, LAMINAT);
         Ceiling ceilingTwo = new Ceiling(true, WHITE);
         ceilingTwo.toColor();
         Room roomTwo = new Room(wallsTwo, floorTwo, ceilingTwo, "Living-room");
@@ -101,7 +98,7 @@ public class MainClass {
         wallsThree.add(wallEight);
         wallsThree.add(wallNine);
 
-        Floor floorThree = new Floor( false, LENOLEUM);
+        Floor floorThree = new Floor(false, LENOLEUM);
         Ceiling ceilingThree = new Ceiling(true, GREEN);
         Room room3 = new Room(wallsThree, floorThree, ceilingThree, "Dinning-room");
         floorThree.floorCoverInfo();
@@ -132,13 +129,18 @@ public class MainClass {
 
         LOGGER.debug("\n\n");
 
+        Address address = Address.getInstance();
+        address.setCity("Minsk");
+        address.setStreet("Zhukov");
+        address.setHouseNumber(18);
+
 //        House<Boolean> houseOne = null;
-        House<String> house = null;
+        House<String> houseTwo = null;
         try {
-//            houseOne = new House<>("Round", "Liveable", stage, 3, "Brest, Center", false);
-            house = new House<>("Round", "Liveable", stage, 1, /*"Minsk, Center",*/ "NO");
-        } catch (InvalidCountStageException | InvalidAddressException e) {
-            LOGGER.debug("Incorrect number of (count)Stages or Address name.  " + e.getLocalizedMessage(), e);
+//            houseOne = new House<>("Round", "Liveable", stage, 3, address, false);
+            houseTwo = new House<>("Round", "Liveable", stage, 1, address, "NO");
+        } catch (InvalidCountStageException e) {
+            LOGGER.debug("Incorrect number of (count)Stages.  " + e.getLocalizedMessage(), e);
         } catch (Exception e) {
             LOGGER.debug("Other exception");
         } finally {
@@ -150,14 +152,14 @@ public class MainClass {
 
         LOGGER.debug("        -----       -----        ----           ");
 
-        assert house != null;
-        house.printFurnitureInfo();
+        assert houseTwo != null;
+        houseTwo.printFurnitureInfo();
 
-        LOGGER.debug(house.toString());
+        LOGGER.debug(houseTwo.toString());
 
         LOGGER.debug("        -----       -----        ----           ");
 
-       roomTwo.printRoomInfo(elementOne.getElementMaterial().toString() + " and it is " + elementOne.getElementMaterial().getDescription());
+        roomTwo.printRoomInfo(elementOne.getElementMaterial().toString() + " and it is " + elementOne.getElementMaterial().getDescription());
 
         LOGGER.debug("\n");
         ceilingOne.printCeilInfo();

@@ -1,6 +1,5 @@
 package com.solvd.hw007.dom;
 
-import com.solvd.hw007.exception.InvalidAddressException;
 import com.solvd.hw007.exception.InvalidCountStageException;
 import com.solvd.hw007.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -24,18 +23,14 @@ public class House<T> extends Building {
     private final T hasFurniture;
 
     public House(String form, String type, Stage stage,
-                 int countStages, /*Address address, */ T hasFurniture) throws InvalidCountStageException,
-            InvalidAddressException {
+                 int countStages, Address address, T hasFurniture) throws InvalidCountStageException {
         super(form, type);
         this.stage = stage;
         if (countStages <= 0) {
             throw new InvalidCountStageException("Count of stages must be natural");
         }
         this.countStages = countStages;
-//        if (address.contains("_")) {
-//            throw new InvalidAddressException("Address cannot contain '_' symbol");
-//        }
-//        this.address = address;
+
         this.hasFurniture = hasFurniture;
     }
 
@@ -96,17 +91,10 @@ public class House<T> extends Building {
         return address;
     }
 
-//    public void setAddress(String address) throws InvalidAddressException {
-//        if (address.contains("_")) {
-//            throw new InvalidAddressException("Address cannot contain '_' symbol");
-//        }
-//        this.address = address;
-//    }
-
     @Override
     public String toString() {
         return "\n\n        -----       -----        ----           " +
-                "\nThis House's address is \n" +  Address.getInstance().getCity() + "\n"
+                "\nThis House's address is \n" + Address.getInstance().getCity() + "\n"
                 + Address.getInstance().getStreet() + "\n" + Address.getInstance().getHouseNumber() + '\'' +
                 ",\n It has " + countStages + " Stages," +
                 "\nThis house walls Total area is " + houseWallsAreaCalc() + "m2" +

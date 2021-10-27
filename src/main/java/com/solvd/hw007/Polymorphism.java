@@ -1,7 +1,6 @@
 package com.solvd.hw007;
 
 import com.solvd.hw007.room.Heatable;
-import com.solvd.hw007.room.Layable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

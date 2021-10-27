@@ -1,7 +1,6 @@
 package com.solvd.hw007.sostav;
 
-import com.solvd.hw007.exception.ElementHeightException;
-import com.solvd.hw007.exception.MaterialInvalidException;
+import com.solvd.hw007.exception.InvalidElementHeightException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,54 +12,45 @@ public class Element<T> {
 
     private double length;
     private double height;
-    private String material;
-    ElementMaterial elementMaterial;
+    private ElementMaterial elementMaterial;
     private T gost;
 
     public Element() {
     }
 
     public Element(double length, double height, ElementMaterial elementMaterial, T gost) {
+        if (height < 0.1 || height > 5) {
+            throw new InvalidElementHeightException("Impossible length");
+        }
         this.length = length;
-//        if (height < 0.1 || height > 5) {
-//            throw new ElementHeightException("Impossible height");
+
+        if (height < 0.1 || height > 5) {
+            throw new InvalidElementHeightException("Impossible height");
+        }
         this.height = height;
         this.elementMaterial = elementMaterial;
         this.gost = gost;
     }
 
-    //    public Element(double length, double height, String material, T gost) {
-//        this.length = length;
-//        if (height < 0.1 || height > 5) {
-//            throw new ElementHeightException("Impossible height");
-//        }
-//        this.height = height;
-////        if (material.contains("_")) {
-////            throw new MaterialInvalidException("Material is invalid");
-////        }
-//        this.material = material;
-//        this.gost = gost;
-//    }
-
     public void printMaterialInfo() {
-switch (elementMaterial) {
-    case BETON:
-        LOGGER.debug("The Cheapest material is " + elementMaterial + " IT's - "
-                + elementMaterial.getDescription()
-                + " \nIt's length and height  are - " + length + " - " + height);
-        break;
-    case BRICK:
-        LOGGER.debug("Best material " + elementMaterial + " is used here. IT's - " + elementMaterial.getDescription()
-                + " \nIt's length and height  are - " + length + " - " + height);
-        break;
-    case STEEL:
-        LOGGER.debug("The most expensive material is " + elementMaterial + " IT's - " + elementMaterial.getDescription()
-                + " \nIt's length and height  are - " + length + " - " + height);
-        break;
-    case WOODEN:
-        LOGGER.debug("Eco material is " + elementMaterial + " IT's - " + elementMaterial.getDescription()
-                + " \nIt's length and height  are - " + length + " - " + height);
-    }
+        switch (elementMaterial) {
+            case BETON:
+                LOGGER.debug("The Cheapest material is " + elementMaterial + " IT's - "
+                        + elementMaterial.getDescription()
+                        + " \nIt's length and height  are - " + length + " - " + height);
+                break;
+            case BRICK:
+                LOGGER.debug("Best material " + elementMaterial + " is used here. IT's - " + elementMaterial.getDescription()
+                        + " \nIt's length and height  are - " + length + " - " + height);
+                break;
+            case STEEL:
+                LOGGER.debug("The most expensive material is " + elementMaterial + " IT's - " + elementMaterial.getDescription()
+                        + " \nIt's length and height  are - " + length + " - " + height);
+                break;
+            case WOODEN:
+                LOGGER.debug("Eco material is " + elementMaterial + " IT's - " + elementMaterial.getDescription()
+                        + " \nIt's length and height  are - " + length + " - " + height);
+        }
     }
 
     public double getLength() {
@@ -77,7 +67,7 @@ switch (elementMaterial) {
 
     public void setHeight(double height) {
         if (height < 0.1 || height > 5) {
-            throw new ElementHeightException("Impossible height");
+            throw new InvalidElementHeightException("Impossible height");
         }
         this.height = height;
     }
@@ -97,17 +87,6 @@ switch (elementMaterial) {
     public void setElementMaterial(ElementMaterial elementMaterial) {
         this.elementMaterial = elementMaterial;
     }
-
-//    public String getMaterial() {
-//        return material;
-//    }
-//
-//    public void setMaterial(String material) {
-//        if (material.contains("_")) {
-//            throw new MaterialInvalidException("Material is invalid");
-//        }
-//        this.material = material;
-//    }
 
     @Override
     public String toString() {
