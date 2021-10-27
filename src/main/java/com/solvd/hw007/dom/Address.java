@@ -1,6 +1,5 @@
 package com.solvd.hw007.dom;
 
-
 import com.solvd.hw007.exception.InvalidAddressException;
 
 /**
