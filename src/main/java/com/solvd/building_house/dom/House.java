@@ -2,6 +2,7 @@ package com.solvd.building_house.dom;
 
 import com.solvd.building_house.exception.InvalidCountStageException;
 import com.solvd.building_house.stage.Stage;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -92,11 +93,12 @@ public class House<T> extends Building {
     }
 
     @Override
+
     public String toString() {
         return "\n\n        -----       -----        ----           " +
-                "\nThis House's address is \n" + Address.getInstance().getCity() + "\n"
-                + Address.getInstance().getStreet() + "\n" + Address.getInstance().getHouseNumber() + '\'' +
-                ",\n It has " + countStages + " Stages," +
+                "\nThis House's address is \n" + Address.getInstance().getCity() +
+                "\n" + Address.getInstance().getStreet() + "\n" + Address.getInstance().getHouseNumber() +
+                '\'' + ",\n It has " + countStages + " Stages," +
                 "\nThis house walls Total area is " + houseWallsAreaCalc() + "m2" +
                 "\n Building time - " + houseTimeProduceCalc() + " sek" +
                 "\n has this house Furniture ? - " + hasFurniture +
