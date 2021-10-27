@@ -23,7 +23,9 @@ public class House<T> extends Building {
     private final T hasFurniture;
 
     public House(String form, String type, Stage stage,
+
                  int countStages, Address address, T hasFurniture) throws InvalidCountStageException {
+
         super(form, type);
         this.stage = stage;
         if (countStages <= 0) {
@@ -91,10 +93,12 @@ public class House<T> extends Building {
         return address;
     }
 
+
     @Override
     public String toString() {
         return "\n\n        -----       -----        ----           " +
                 "\nThis House's address is \n" + Address.getInstance().getCity() + "\n"
+
                 + Address.getInstance().getStreet() + "\n" + Address.getInstance().getHouseNumber() + '\'' +
                 ",\n It has " + countStages + " Stages," +
                 "\nThis house walls Total area is " + houseWallsAreaCalc() + "m2" +

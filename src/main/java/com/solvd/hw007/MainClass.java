@@ -137,10 +137,12 @@ public class MainClass {
 //        House<Boolean> houseOne = null;
         House<String> houseTwo = null;
         try {
+
 //            houseOne = new House<>("Round", "Liveable", stage, 3, address, false);
             houseTwo = new House<>("Round", "Liveable", stage, 1, address, "NO");
         } catch (InvalidCountStageException e) {
             LOGGER.debug("Incorrect number of (count)Stages.  " + e.getLocalizedMessage(), e);
+
         } catch (Exception e) {
             LOGGER.debug("Other exception");
         } finally {

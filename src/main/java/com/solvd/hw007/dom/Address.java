@@ -1,5 +1,6 @@
 package com.solvd.hw007.dom;
 
+
 import com.solvd.hw007.exception.InvalidAddressException;
 
 /**
@@ -8,6 +9,7 @@ import com.solvd.hw007.exception.InvalidAddressException;
 public class Address {
 
     private static Address instance;
+
     private String city;
     private String street;
     private int houseNumber;
@@ -43,6 +45,7 @@ public class Address {
         }
         this.houseNumber = houseNumber;
     }
+
 
     public String getCity() {
         return city;
