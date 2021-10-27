@@ -118,5 +118,6 @@ public class House<T> extends Building {
     @Override
     public int hashCode() {
         return Objects.hash(stage, countStages, address);
+
     }
 }
