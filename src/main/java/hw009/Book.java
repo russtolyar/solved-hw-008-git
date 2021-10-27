@@ -47,7 +47,8 @@ public class Book {
                 textMap.put(word, 1);
             }
         }
-        textMap.entrySet().stream().sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+        textMap.entrySet().stream().sorted(Map.Entry
+                .<String, Integer>comparingByValue().reversed())
                 .forEach(System.out::println);
 
         Map<String, Integer> result = textMap.entrySet()
