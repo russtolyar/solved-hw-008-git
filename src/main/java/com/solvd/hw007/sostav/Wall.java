@@ -1,10 +1,10 @@
 package com.solvd.hw007.sostav;
 
+import com.solvd.hw007.exception.InvalidCountElementException;
 import com.solvd.hw007.room.Colorable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Wall implements Colorable {
@@ -17,6 +17,9 @@ public class Wall implements Colorable {
 
     public Wall(Element<?> element, int countElement) {
         this.element = element;
+        if (countElement < 1 || countElement > 1000) {
+            throw new InvalidCountElementException("Quantity of Material elements is invalid");
+        }
         this.countElement = countElement;
     }
 
