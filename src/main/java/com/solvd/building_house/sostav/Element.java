@@ -13,6 +13,7 @@ public class Element<T> {
     private double length;
     private double height;
     private ElementMaterial elementMaterial;
+
     private T gost;
 
     public Element() {
@@ -33,6 +34,7 @@ public class Element<T> {
     }
 
     public void printMaterialInfo() {
+
         switch (elementMaterial) {
             case BETON:
                 LOGGER.debug("The Cheapest material is " + elementMaterial + " IT's - "

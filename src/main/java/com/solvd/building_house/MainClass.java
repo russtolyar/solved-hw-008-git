@@ -79,7 +79,8 @@ public class MainClass {
         wallsTwo.add(wallSix);
         wallsTwo.add(wallSeven);
 
-        Floor floorTwo = new Floor(true, LAMINAT);
+        Floor floorTwo = new Floor( true, LAMINAT);
+
         Ceiling ceilingTwo = new Ceiling(true, WHITE);
         ceilingTwo.toColor();
         Room roomTwo = new Room(wallsTwo, floorTwo, ceilingTwo, "Living-room");
@@ -99,7 +100,8 @@ public class MainClass {
         wallsThree.add(wallEight);
         wallsThree.add(wallNine);
 
-        Floor floorThree = new Floor(false, LENOLEUM);
+        Floor floorThree = new Floor( false, LENOLEUM);
+
         Ceiling ceilingThree = new Ceiling(true, GREEN);
         Room room3 = new Room(wallsThree, floorThree, ceilingThree, "Dinning-room");
         floorThree.floorCoverInfo();
@@ -161,7 +163,7 @@ public class MainClass {
 
         LOGGER.debug("        -----       -----        ----           ");
 
-        roomTwo.printRoomInfo(elementOne.getElementMaterial().toString() + " and it is " + elementOne.getElementMaterial().getDescription());
+       roomTwo.printRoomInfo(elementOne.getElementMaterial().toString() + " and it is " + elementOne.getElementMaterial().getDescription());
 
         LOGGER.debug("\n");
         ceilingOne.printCeilInfo();

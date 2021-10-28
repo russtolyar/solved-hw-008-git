@@ -16,6 +16,7 @@ public class Book {
     private static final Logger LOGGER = LogManager.getLogger(Book.class);
 
     public static void main(String[] args) throws IOException {
+        LOGGER.debug("Hello");
 
         File textFile = new File("src\\main\\resources\\book.txt");
         LOGGER.debug("Path " + textFile.getAbsolutePath());

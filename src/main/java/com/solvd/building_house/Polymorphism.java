@@ -18,4 +18,5 @@ public class Polymorphism {
             LOGGER.debug("you cannot heat this floor");
         }
     }
+
 }
