@@ -1,6 +1,8 @@
+
 package com.solvd.buildinghouse.sostav;
 
 import com.solvd.buildinghouse.exception.InvalidElementHeightException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +15,7 @@ public class Element<T> {
     private double length;
     private double height;
     private ElementMaterial elementMaterial;
+
     private T gost;
 
     public Element() {
@@ -33,6 +36,7 @@ public class Element<T> {
     }
 
     public void printMaterialInfo() {
+
         switch (elementMaterial) {
             case BETON:
                 LOGGER.debug("The Cheapest material is " + elementMaterial + " IT's - "

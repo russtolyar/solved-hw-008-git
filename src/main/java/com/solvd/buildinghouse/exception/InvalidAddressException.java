@@ -1,4 +1,6 @@
+
 package com.solvd.buildinghouse.exception;
+
 
 public class InvalidAddressException extends RuntimeException {
 

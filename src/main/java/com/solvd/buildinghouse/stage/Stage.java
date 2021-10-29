@@ -1,7 +1,9 @@
+
 package com.solvd.buildinghouse.stage;
 
 import com.solvd.buildinghouse.Paintable;
 import com.solvd.buildinghouse.flat.Flat;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

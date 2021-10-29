@@ -1,6 +1,8 @@
+
 package com.solvd.buildinghouse.dom;
 
 import com.solvd.buildinghouse.exception.InvalidAddressException;
+
 
 /**
  * Singleton realisation
