@@ -79,3 +79,22 @@ P.S.: если нужен коммент внутри метода над как
 >>>>>>> ffecf7ebb2ddc1d9323832687a5b73bcdaca100a:src/main/java/com/solvd/hw007/Tasks.txt
 Добавит в проект 3 енама и использование их в if-else, switch-case
 Создать 1 синглтон(как обычный класс а не enum) и почитать что это за паттерн и зачем он нужен
+
+
+9.
+Попробовать рефлексию (взять класс по имени, создать инстанс, заполнить поля, вызвать методы)
+Добавить 1 лямбду и заиспользовать где нибудь ее (просто попробовать вызвать)
+Изменить все циклы на Streaming
+Создать 5 стримов отдельно прямо в main где есть filter, map, flatMap, peek, collect, findFirst, orElse, orElseThrow
+
+
+10.
+Создать connection pool с фиксированным количеством коннекшенов и много потоков (с помощью Runnable и Thread)
+
+Создать класс Connection в котором есть 5 методами (например CRUD)
+Создать класс ConnectionPool. List<Connection> внутри ConnectionPool. Будут методы
+- getInstance (Singleton - потокобезопасный)
+- Connection getConnection()
+- void releaseConnection(Connection connection)
+Не забываем про synchronized в пуле
+Реализовать то же самое с помощью ExecutorService + CompleatableFuture (future + completionStage)

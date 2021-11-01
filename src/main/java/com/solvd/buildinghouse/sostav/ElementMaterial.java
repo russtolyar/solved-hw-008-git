@@ -2,6 +2,9 @@
 package com.solvd.buildinghouse.sostav;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum ElementMaterial {
     WOODEN("Retro-style"),
     STEEL("Extra-strong"),
@@ -17,4 +20,5 @@ public enum ElementMaterial {
     public String getDescription() {
         return description;
     }
+
 }
