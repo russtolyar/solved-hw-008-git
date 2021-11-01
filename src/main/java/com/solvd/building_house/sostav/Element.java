@@ -4,7 +4,12 @@ import com.solvd.building_house.exception.InvalidElementHeightException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.function.Predicate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import static com.solvd.building_house.sostav.ElementMaterial.*;
 
 public class Element<T> {
 
@@ -33,6 +38,24 @@ public class Element<T> {
         this.gost = gost;
     }
 
+    public List<ElementMaterial> printEnumList() {
+        List<ElementMaterial> enumList = new ArrayList<>();
+        enumList.add(WOODEN);
+        enumList.add(STEEL);
+        enumList.add(BETON);
+        enumList.add(BRICK);
+        LOGGER.debug(enumList);
+        return enumList;
+
+    }
+    public void checkEnums(List<ElementMaterial> al, Predicate<ElementMaterial> pr) {
+        for (ElementMaterial em : al) {
+            if(pr.test(em)) {
+                LOGGER.debug(em);
+            }
+        }
+    }
+
     public void printMaterialInfo() {
 
         switch (elementMaterial) {
@@ -52,7 +75,8 @@ public class Element<T> {
             case WOODEN:
                 LOGGER.debug("Eco material is " + elementMaterial + " IT's - " + elementMaterial.getDescription()
                         + " \nIt's length and height  are - " + length + " - " + height);
-            default: break;
+            default:
+                break;
         }
     }
 
@@ -93,7 +117,7 @@ public class Element<T> {
 
     @Override
     public String toString() {
-        return "This Element" +
+        return "This Element " +
                 "length=" + length +
                 ", height=" + height +
                 ", material='" + elementMaterial +

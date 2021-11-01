@@ -13,10 +13,15 @@ import com.solvd.building_house.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import static com.solvd.building_house.room.CeilingColor.*;
 import static com.solvd.building_house.room.FloorCoverMaterial.*;
@@ -26,9 +31,72 @@ public class MainClass {
 
     private static final Logger LOGGER = LogManager.getLogger(MainClass.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
         LOGGER.debug("Посчитать площадь всех стен в доме, Массивы, Несколько вложенных циклов\n");
+
+        LOGGER.debug("Reflection is here\n");
+
+        Element<String> elementReflection = new Element<>(8, 2, WOODEN, "Gost100");
+        LOGGER.debug(elementReflection + "\n");
+
+        elementReflection.checkEnums(elementReflection.printEnumList(), (ElementMaterial em) -> {
+            System.out.println("LAMBDA is used here");
+            return  em.toString().length() > 5;});
+
+        Class<?> elementClass = null;
+        try {
+            elementClass = Class.forName("com.solvd.building_house.sostav.Element");
+        } catch
+        (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+//        Class<Element> elementClass = Element.class;
+
+        Field[] declaredFields = elementClass.getDeclaredFields();
+        for (Field field : declaredFields) {
+            LOGGER.debug(field);
+        }
+
+        Field heightField = elementClass.getDeclaredField("height");
+        heightField.setAccessible(true);
+        LOGGER.debug("\nBefore change the height was " + heightField.get(elementReflection));
+        heightField.setDouble(elementReflection, 2.5);
+        LOGGER.debug("\nAfter change the height is " + heightField.get(elementReflection));
+
+        Field elementMaterialField = elementClass.getDeclaredField("elementMaterial");
+        elementMaterialField.setAccessible(true);
+
+        LOGGER.debug("\nBefore change the ElementMaterial was " + elementMaterialField.get(elementReflection));
+        elementMaterialField.set(elementReflection, BETON);
+        LOGGER.debug("\nAfter change the ElementMaterial is " + elementMaterialField.get(elementReflection));
+
+        Method[] myDeclaredMethods = elementClass.getDeclaredMethods();
+        for (Method method : myDeclaredMethods) {
+            LOGGER.debug(method);
+        }
+        Method getPrintEnumListMethod = elementClass.getDeclaredMethod("printEnumList");
+        int modifiers0 = getPrintEnumListMethod.getModifiers();
+        LOGGER.debug(" is this method " + getPrintEnumListMethod.getName() + " public? - " + Modifier.isPublic(modifiers0));
+        LOGGER.debug(" is this method " + getPrintEnumListMethod.getName() + " final? - " + Modifier.isFinal(modifiers0));
+        LOGGER.debug("\n\n" + getPrintEnumListMethod.invoke(elementReflection) + "\n");
+
+
+
+        Method getToStringMethod = elementClass.getDeclaredMethod("toString");
+        int modifiers1 = getToStringMethod.getModifiers();
+        LOGGER.debug(" is this method " + getToStringMethod.getName() + " public? - " + Modifier.isPublic(modifiers1));
+        LOGGER.debug(" is this method " + getToStringMethod.getName() + " final? - " + Modifier.isFinal(modifiers1));
+        LOGGER.debug("\n\n" + getToStringMethod.invoke(elementReflection) + "\n");
+
+        Method getPrintMaterialInfoMethod = elementClass.getMethod("printMaterialInfo");
+        int modifiers = getPrintMaterialInfoMethod.getModifiers();
+        LOGGER.debug(" is this method " + getPrintMaterialInfoMethod.getName() + " public? - " + Modifier.isPublic(modifiers));
+        LOGGER.debug(" is this method " + getPrintMaterialInfoMethod.getName() + " final? - " + Modifier.isFinal(modifiers));
+
+        getPrintMaterialInfoMethod.invoke(elementReflection);
+
+        LOGGER.debug("\nThe end of reflection\n");
 
         Element<String> elementOne = new Element<>(0.2, 0.1, BRICK, "Gost1");
         Element<Double> elementTwo = new Element<>(5, 2, BETON, 3.14);
@@ -79,7 +147,7 @@ public class MainClass {
         wallsTwo.add(wallSix);
         wallsTwo.add(wallSeven);
 
-        Floor floorTwo = new Floor( true, LAMINAT);
+        Floor floorTwo = new Floor(true, LAMINAT);
 
         Ceiling ceilingTwo = new Ceiling(true, WHITE);
         ceilingTwo.toColor();
@@ -100,7 +168,7 @@ public class MainClass {
         wallsThree.add(wallEight);
         wallsThree.add(wallNine);
 
-        Floor floorThree = new Floor( false, LENOLEUM);
+        Floor floorThree = new Floor(false, LENOLEUM);
 
         Ceiling ceilingThree = new Ceiling(true, GREEN);
         Room room3 = new Room(wallsThree, floorThree, ceilingThree, "Dinning-room");
@@ -163,7 +231,7 @@ public class MainClass {
 
         LOGGER.debug("        -----       -----        ----           ");
 
-       roomTwo.printRoomInfo(elementOne.getElementMaterial().toString() + " and it is " + elementOne.getElementMaterial().getDescription());
+        roomTwo.printRoomInfo(elementOne.getElementMaterial().toString() + " and it is " + elementOne.getElementMaterial().getDescription());
 
         LOGGER.debug("\n");
         ceilingOne.printCeilInfo();
