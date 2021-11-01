@@ -45,7 +45,8 @@ public class MainClass {
 
         elementReflection.checkEnums(elementReflection.printEnumList(), (ElementMaterial em) -> {
             System.out.println("LAMBDA is used here");
-            return  em.toString().length() > 5;});
+            return em.toString().length() > 5;
+        });
 
 //        Class<?> elementClass = null;
 //        try {
@@ -83,7 +84,6 @@ public class MainClass {
         LOGGER.debug(" is this method " + getPrintEnumListMethod.getName() + " public? - " + Modifier.isPublic(modifiers0));
         LOGGER.debug(" is this method " + getPrintEnumListMethod.getName() + " final? - " + Modifier.isFinal(modifiers0));
         LOGGER.debug("\n\n" + getPrintEnumListMethod.invoke(elementReflection) + "\n");
-
 
 
         Method getToStringMethod = elementClass.getDeclaredMethod("toString");
@@ -151,7 +151,7 @@ public class MainClass {
         wallsTwo.add(wallSeven);
 
 
-        Floor floorTwo = new Floor( true, LAMINAT);
+        Floor floorTwo = new Floor(true, LAMINAT);
 
         Ceiling ceilingTwo = new Ceiling(true, WHITE);
         ceilingTwo.toColor();
@@ -173,7 +173,7 @@ public class MainClass {
         wallsThree.add(wallNine);
 
 
-        Floor floorThree = new Floor( false, LENOLEUM);
+        Floor floorThree = new Floor(false, LENOLEUM);
 
         Ceiling ceilingThree = new Ceiling(true, GREEN);
         Room room3 = new Room(wallsThree, floorThree, ceilingThree, "Dinning-room");
@@ -236,7 +236,7 @@ public class MainClass {
 
         LOGGER.debug("        -----       -----        ----           ");
 
-       roomTwo.printRoomInfo(elementOne.getElementMaterial().toString() + " and it is " + elementOne.getElementMaterial().getDescription());
+        roomTwo.printRoomInfo(elementOne.getElementMaterial().toString() + " and it is " + elementOne.getElementMaterial().getDescription());
 
         LOGGER.debug("\n");
         ceilingOne.printCeilInfo();
