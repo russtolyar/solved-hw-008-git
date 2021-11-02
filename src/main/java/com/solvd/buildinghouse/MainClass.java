@@ -21,6 +21,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
+
+
 import static com.solvd.buildinghouse.room.CeilingColor.*;
 import static com.solvd.buildinghouse.room.FloorCoverMaterial.*;
 import static com.solvd.buildinghouse.sostav.ElementMaterial.*;
@@ -41,7 +43,10 @@ public class MainClass {
 
         elementReflection.checkEnums(elementReflection.printEnumList(), (ElementMaterial em) -> {
             System.out.println("LAMBDA is used here");
+
             return em.toString().length() <= 5;
+
+
         });
 
 //        Class<?> elementClass = null;
@@ -51,6 +56,7 @@ public class MainClass {
 //        (ClassNotFoundException e) {
 //            e.printStackTrace();
 //        }
+
         //Получаем класс класса Element
         Class<Element> elementClass = Element.class;
 //        // Определяем типы переменных параметров для параметризованных методов построения
@@ -77,6 +83,7 @@ public class MainClass {
 //            LOGGER.debug(field);
 //        }
 
+
         Field heightField = elementClass.getDeclaredField("height");
         heightField.setAccessible(true);
         LOGGER.debug("\nBefore change the height was " + heightField.get(elementReflection));
@@ -85,6 +92,7 @@ public class MainClass {
 
         Field elementMaterialField = elementClass.getDeclaredField("elementMaterial");
         elementMaterialField.setAccessible(true);
+
         LOGGER.debug("\nBefore change the ElementMaterial was " + elementMaterialField.get(elementReflection));
         elementMaterialField.set(elementReflection, BETON);
         LOGGER.debug("\nAfter change the ElementMaterial is " + elementMaterialField.get(elementReflection));

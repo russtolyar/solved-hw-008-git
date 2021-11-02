@@ -51,11 +51,11 @@ public class Element<T> {
 
     }
 
-    public void checkEnums(List<ElementMaterial> al, Predicate<ElementMaterial> pr) {
-//        al.stream().filter(em->em.p
 
+    public void checkEnums(List<ElementMaterial> al, Predicate<ElementMaterial> pr) {
         for (ElementMaterial em : al) {
             if (pr.test(em)) {
+
                 LOGGER.debug(em);
             }
         }
