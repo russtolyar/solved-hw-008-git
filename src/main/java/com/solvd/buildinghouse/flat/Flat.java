@@ -8,7 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 public class Flat<T> implements Electrisized {
@@ -24,6 +26,7 @@ public class Flat<T> implements Electrisized {
     }
 
     public double flatWallsAreaCalc() {
+//        Double flatWallsArea = rooms.stream().map(Room::roomWallsAreaCalc).;
         double flatWallsArea = 0;
         for (Room room : rooms) {
             flatWallsArea += room.roomWallsAreaCalc();

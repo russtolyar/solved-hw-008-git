@@ -50,9 +50,12 @@ public class Element<T> {
         return enumList;
 
     }
+
+
     public void checkEnums(List<ElementMaterial> al, Predicate<ElementMaterial> pr) {
         for (ElementMaterial em : al) {
-            if(pr.test(em)) {
+            if (pr.test(em)) {
+
                 LOGGER.debug(em);
             }
         }

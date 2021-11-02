@@ -4,6 +4,7 @@ package com.solvd.buildinghouse;
 import com.solvd.buildinghouse.dom.Address;
 import com.solvd.buildinghouse.dom.House;
 import com.solvd.buildinghouse.exception.InvalidCountStageException;
+import com.solvd.buildinghouse.exception.InvalidElementHeightException;
 import com.solvd.buildinghouse.flat.Flat;
 import com.solvd.buildinghouse.room.*;
 import com.solvd.buildinghouse.sostav.Element;
@@ -15,14 +16,11 @@ import com.solvd.buildinghouse.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.stream.Collectors;
+
+
 
 
 import static com.solvd.buildinghouse.room.CeilingColor.*;
@@ -34,7 +32,7 @@ public class MainClass {
 
     private static final Logger LOGGER = LogManager.getLogger(MainClass.class);
 
-    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
 
         LOGGER.debug("Посчитать площадь всех стен в доме, Массивы, Несколько вложенных циклов\n");
 
@@ -45,7 +43,10 @@ public class MainClass {
 
         elementReflection.checkEnums(elementReflection.printEnumList(), (ElementMaterial em) -> {
             System.out.println("LAMBDA is used here");
-            return em.toString().length() > 5;
+
+            return em.toString().length() <= 5;
+
+
         });
 
 //        Class<?> elementClass = null;
@@ -55,12 +56,33 @@ public class MainClass {
 //        (ClassNotFoundException e) {
 //            e.printStackTrace();
 //        }
-        Class<Element> elementClass = Element.class;
 
-        Field[] declaredFields = elementClass.getDeclaredFields();
-        for (Field field : declaredFields) {
-            LOGGER.debug(field);
-        }
+        //Получаем класс класса Element
+        Class<Element> elementClass = Element.class;
+//        // Определяем типы переменных параметров для параметризованных методов построения
+//        Class[] parType = new Class[]{double.class, double.class, ElementMaterial.class, T.class};
+//        // Создание класса конструктора по параметрам
+//        Constructor<Element> constr = elementClass.getConstructor(parType);
+//        // Передаем соответствующие параметры для конструктора с параметрами
+//        Object[] objElement = new Object[]{
+//                new Double(10),
+//                new Double(2.6),
+//                new ElementMaterial (BETON),
+//                new String("NewGost")
+        //     };
+        // Создать экземпляр класса Element с помощью метода newInstance.
+//        Object objectElement = constr.newInstance(objElement);
+//        LOGGER.debug(objectElement);
+
+        LOGGER.debug("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n");
+
+        Arrays.stream(elementClass.getDeclaredFields()).forEach(System.out::println);
+
+//        Field[] declaredFields = elementClass.getDeclaredFields();
+//        for (Field field : declaredFields) {
+//            LOGGER.debug(field);
+//        }
+
 
         Field heightField = elementClass.getDeclaredField("height");
         heightField.setAccessible(true);
@@ -75,16 +97,18 @@ public class MainClass {
         elementMaterialField.set(elementReflection, BETON);
         LOGGER.debug("\nAfter change the ElementMaterial is " + elementMaterialField.get(elementReflection));
 
-        Method[] myDeclaredMethods = elementClass.getDeclaredMethods();
-        for (Method method : myDeclaredMethods) {
-            LOGGER.debug(method);
-        }
+        Arrays.stream(elementClass.getDeclaredMethods()).forEach(System.out::println);
+
+//        Method[] myDeclaredMethods = elementClass.getDeclaredMethods();
+//        for (Method method : myDeclaredMethods) {
+//            LOGGER.debug(method);
+//      }
+
         Method getPrintEnumListMethod = elementClass.getDeclaredMethod("printEnumList");
         int modifiers0 = getPrintEnumListMethod.getModifiers();
         LOGGER.debug(" is this method " + getPrintEnumListMethod.getName() + " public? - " + Modifier.isPublic(modifiers0));
         LOGGER.debug(" is this method " + getPrintEnumListMethod.getName() + " final? - " + Modifier.isFinal(modifiers0));
         LOGGER.debug("\n\n" + getPrintEnumListMethod.invoke(elementReflection) + "\n");
-
 
         Method getToStringMethod = elementClass.getDeclaredMethod("toString");
         int modifiers1 = getToStringMethod.getModifiers();
@@ -103,7 +127,7 @@ public class MainClass {
 
         Element<String> elementOne = new Element<>(0.2, 0.1, BRICK, "Gost1");
         Element<Double> elementTwo = new Element<>(5, 2, BETON, 3.14);
-        Element<String> elementThree = new Element<>(6, 2, WOODEN, "Gost33");
+        Element<String> elementThree = new Element<>(6, 2.2, WOODEN, "Gost33");
         Element<Integer> elementFour = new Element<>(4, 2, STEEL, 12345);
         elementThree.printMaterialInfo();
 
@@ -120,6 +144,52 @@ public class MainClass {
         elements.add(elementThree);
         elements.add(elementFour);
         LOGGER.debug(elements + "\n");
+
+        List<Element<?>> filterElementsList = elements
+                .stream()
+                .filter(e -> e.getLength() > 4.3)
+                .collect(Collectors.toList());
+        LOGGER.debug("\n\nfilterElementsList - \n" + filterElementsList);
+
+        Optional<?> findFirstElementB = elements
+                .stream()
+                .filter(element -> element
+                        .getElementMaterial()
+                        .toString()
+                        .startsWith("B"))
+                .findFirst();
+        LOGGER.debug("\n\nfindFirstElementB - \n" + findFirstElementB);
+
+        List<Double> mapSquareElement = elements
+                .stream()
+                .map(element -> element
+                        .getHeight() * element
+                        .getLength())
+                .collect(Collectors.toList());
+        LOGGER.debug("\n\nmapSquareElement - \n" + mapSquareElement);
+
+        Element<?> orElseFindAnyElements = elements
+                .stream()
+                .filter(element -> element
+                        .getElementMaterial() == WOODEN)
+                .findAny()
+                .orElse(elementReflection);
+        LOGGER.debug("\n\norElseFindAnyElements - \n" + orElseFindAnyElements);
+
+        LOGGER.debug(elements);
+        Element<?> orElseThrowElements = elements
+                .stream()
+                .filter(element -> element
+                        .getHeight() < 7 && element.getHeight() >= 0)
+                .findFirst()
+                .orElseThrow(InvalidElementHeightException::new);
+        LOGGER.debug("\n\norElseThrowElements - \n" + orElseThrowElements);
+
+        List<Element<?>> peekDoubledHeightElementsList = elements
+                .stream()
+                .peek(e -> e.setHeight(e.getHeight() * 2))
+                .collect(Collectors.toList());
+        LOGGER.debug("\n\npeekDoubledHeightElementsList - \n" + peekDoubledHeightElementsList);
 
         Wall wallOne = new Wall(elementOne, 200);
         Wall wallTwo = new Wall(elementOne, 250);
@@ -150,7 +220,6 @@ public class MainClass {
         wallsTwo.add(wallSix);
         wallsTwo.add(wallSeven);
 
-
         Floor floorTwo = new Floor(true, LAMINAT);
 
         Ceiling ceilingTwo = new Ceiling(true, WHITE);
@@ -172,7 +241,6 @@ public class MainClass {
         wallsThree.add(wallEight);
         wallsThree.add(wallNine);
 
-
         Floor floorThree = new Floor(false, LENOLEUM);
 
         Ceiling ceilingThree = new Ceiling(true, GREEN);
@@ -187,11 +255,23 @@ public class MainClass {
         flatsOne.add(flatOne);
         flatsOne.add(flatTwo);
 
+        List<Room> flatMapElements = flatsOne
+                .stream()
+                .flatMap(flat -> flat
+                        .getRooms()
+                        .stream())
+                .peek(room -> room
+                        .getWalls()
+                        .stream().
+                                filter(
+                                        wall -> wall.getElement().getHeight() > 2))
+                .collect(Collectors.toList());
+        LOGGER.debug("\n\n flatMapElements\n" + flatMapElements + "\n\n");
+
         Map<Flat<String>, List<Room>> flatRooms = new HashMap<>();
         flatRooms.put(flatOne, roomsOne);
         flatRooms.put(flatTwo, roomsTwo);
         LOGGER.debug("\n\n flatRooms\n" + flatRooms);
-
 
         Stage stage = new Stage(flatsOne, true);
         LOGGER.debug(stage.toPaint());

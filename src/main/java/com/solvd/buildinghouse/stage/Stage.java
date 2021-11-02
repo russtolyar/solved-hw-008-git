@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Stage implements Paintable {
 
@@ -27,21 +28,42 @@ public class Stage implements Paintable {
         LOGGER.debug("The Stage is cleaned");
     }
 
-    public double stageWallsAreaCalc() {
-        double stageWallsArea = 0;
-        for (Flat<?> flat : flats) {
-            stageWallsArea += flat.flatWallsAreaCalc();
-        }
+    public Double stageWallsAreaCalc() {
+        Double stageWallsArea = flats
+                .stream()
+                .map(flat -> flat.flatWallsAreaCalc())
+                .reduce((a, e) -> a + e)
+                .get();
+        LOGGER.debug("\n\nstageWallsArea   \n" + stageWallsArea);
         return stageWallsArea;
     }
 
+//    public double stageWallsAreaCalc() {
+//        double stageWallsArea = 0;
+//        for (Flat<?> flat : flats) {
+//            stageWallsArea += flat.flatWallsAreaCalc();
+//        }
+//    LOGGER.debug("\n\n stageWallsArea   \n" +  stageWallsArea);
+//        return stageWallsArea;
+//    }
+
     public double stageTimeProduceCalc() {
-        double stageTimeProduce = 0;
-        for (Flat<?> flat : flats) {
-            stageTimeProduce += flat.flatTimeProduceCalc();
-        }
+        double stageTimeProduce = flats
+                .stream()
+                .map(flat -> flat.flatTimeProduceCalc())
+                .reduce((a, e) -> a + e)
+                .get();
+
         return stageTimeProduce;
     }
+
+//    public double stageTimeProduceCalc() {
+//        double stageTimeProduce = 0;
+//        for (Flat<?> flat : flats) {
+//            stageTimeProduce += flat.flatTimeProduceCalc();
+//        }
+//        return stageTimeProduce;
+//    }
 
 
     public List<Flat<?>> getFlats() {
