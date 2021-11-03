@@ -12,16 +12,12 @@ import com.solvd.buildinghouse.sostav.ElementMaterial;
 import com.solvd.buildinghouse.sostav.Wall;
 import com.solvd.buildinghouse.stage.Stage;
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.Collectors;
-
-
-
 
 import static com.solvd.buildinghouse.room.CeilingColor.*;
 import static com.solvd.buildinghouse.room.FloorCoverMaterial.*;
@@ -46,7 +42,6 @@ public class MainClass {
 
             return em.toString().length() <= 5;
 
-
         });
 
 //        Class<?> elementClass = null;
@@ -59,20 +54,20 @@ public class MainClass {
 
         //Получаем класс класса Element
         Class<Element> elementClass = Element.class;
-//        // Определяем типы переменных параметров для параметризованных методов построения
-//        Class[] parType = new Class[]{double.class, double.class, ElementMaterial.class, T.class};
-//        // Создание класса конструктора по параметрам
-//        Constructor<Element> constr = elementClass.getConstructor(parType);
-//        // Передаем соответствующие параметры для конструктора с параметрами
-//        Object[] objElement = new Object[]{
-//                new Double(10),
-//                new Double(2.6),
-//                new ElementMaterial (BETON),
-//                new String("NewGost")
-        //     };
-        // Создать экземпляр класса Element с помощью метода newInstance.
-//        Object objectElement = constr.newInstance(objElement);
-//        LOGGER.debug(objectElement);
+        // Определяем типы переменных параметров для параметризованных методов построения
+        Class[] parType = new Class[]{double.class, double.class, ElementMaterial.class, Object.class};
+        // Создание класса конструктора по параметрам
+        Constructor<Element> constr = elementClass.getConstructor(parType);
+        // Передаем соответствующие параметры для конструктора с параметрами
+        Object[] objElement = new Object[]{
+                10,
+                2.6,
+                BETON,
+                "NewGost"
+        };
+//         Создать экземпляр класса Element с помощью метода newInstance.
+        Object objectElement = constr.newInstance(objElement);
+        LOGGER.debug(objectElement);
 
         LOGGER.debug("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n");
 
@@ -82,7 +77,6 @@ public class MainClass {
 //        for (Field field : declaredFields) {
 //            LOGGER.debug(field);
 //        }
-
 
         Field heightField = elementClass.getDeclaredField("height");
         heightField.setAccessible(true);
