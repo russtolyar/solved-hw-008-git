@@ -3,7 +3,8 @@ package mymultithreads;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ExampleRunnable implements Runnable{
+public class ExampleRunnable implements Runnable {
+
     private static final Logger LOGGER = LogManager.getLogger();
 
     private final MyConnectionPool connectionPoolInstance;
@@ -29,5 +30,4 @@ public class ExampleRunnable implements Runnable{
 
         connectionPoolInstance.releaseConnection(connection);
     }
-
 }

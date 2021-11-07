@@ -13,7 +13,6 @@ public class MainThreads {
 
     public static void main(String[] args) {
 
-
 /**
  *      This just to realise "how to" without classes Thread and Runnable
  *
@@ -31,7 +30,6 @@ public class MainThreads {
  *                             thread.start();
  *                         });
  */
-
 
         IntStream.range(0, 100)
                 .boxed()

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class MyConnectionPool {
+
     private static final Logger LOGGER = LogManager.getLogger(MyConnection.class);
 
     private static volatile List<MyConnection> myConnectionListPool;
@@ -34,6 +35,5 @@ public class MyConnectionPool {
     public synchronized void releaseConnection(MyConnection myConnection) {
         LOGGER.debug("Release Connection");
         myConnectionListPool.add(myConnection);
-
     }
 }
