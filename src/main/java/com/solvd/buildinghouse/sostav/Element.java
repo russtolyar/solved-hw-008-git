@@ -50,12 +50,14 @@ public class Element<T> {
         return enumList;
 
     }
+
     public void checkEnums(List<ElementMaterial> al, Predicate<ElementMaterial> pr) {
-        for (ElementMaterial em : al) {
-            if(pr.test(em)) {
-                LOGGER.debug(em);
-            }
-        }
+        al.stream().filter(elementMaterial1 -> (pr.test(elementMaterial1))).forEach(System.out::println);
+//        for (ElementMaterial em : al) {
+//            if (pr.test(em)) {
+//                LOGGER.debug(em);
+//            }
+//        }
     }
 
     public void printMaterialInfo() {

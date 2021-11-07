@@ -38,7 +38,7 @@ public class House<T> extends Building {
     }
 
     public double houseWallsAreaCalc() {
-        return stage.stageWallsAreaCalc() * countStages;
+        return  stage.stageWallsAreaCalc() * countStages;
     }
 
     public long houseTimeProduceCalc() {
