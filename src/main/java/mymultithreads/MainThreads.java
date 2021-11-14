@@ -3,9 +3,11 @@ package mymultithreads;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,9 +20,9 @@ public class MainThreads {
 
     public static void main(String[] args) {
 
-
 /**
  *  This just to realise "how to" without classes Thread and Runnable
+
  *
  *       IntStream.range(0,100)
  *                 .boxed()
@@ -37,7 +39,6 @@ public class MainThreads {
  *                             thread.start();
  *                          });
  */
-
 
         IntStream.range(0, 100)
                 .boxed()
@@ -90,17 +91,21 @@ public class MainThreads {
                                         myConnection.read();
                                         LOGGER.debug(" by CompletableFuture ");
                                         myConnection.delete();
+
                                     }
                                     , executorService).thenRunAsync(() -> {
+
                                         LOGGER.debug(" by CompletableFuture ");
                                         myConnection.create();
                                     }
                                     , executorService);
 
 
+
                             CompletableFuture<?> allOfFutures = CompletableFuture.allOf(myFuture);
                             get(allOfFutures);
                         })
+
 
                 );
     }
