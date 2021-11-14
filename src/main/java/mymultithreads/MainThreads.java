@@ -3,18 +3,24 @@ package mymultithreads;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
+
+import static javax.swing.UIManager.get;
 
 public class MainThreads {
     private static final Logger LOGGER = LogManager.getLogger(MyConnection.class);
 
     public static void main(String[] args) {
 
+
 /**
- *      This just to realise "how to" without classes Thread and Runnable
+ *  This just to realise "how to" without classes Thread and Runnable
  *
  *       IntStream.range(0,100)
  *                 .boxed()
@@ -26,10 +32,12 @@ public class MainThreads {
  *                                 myConnection.create();
  *                                 myConnection.read();
  *                                 myConnection.print();
+ *                                 MyConnectionPool.releaseConnection(myConnection);
  *                             });
  *                             thread.start();
- *                         });
+ *                          });
  */
+
 
         IntStream.range(0, 100)
                 .boxed()
@@ -51,9 +59,7 @@ public class MainThreads {
         LOGGER.debug("\n Second Part \n");
 
         ExecutorService executorService = Executors.newFixedThreadPool(5);
-        IntStream
-                .range(0, 100)
-                .boxed()
+        IntStream.range(0, 100).boxed()
                 .forEach(i -> executorService
                         .execute(() -> {
                             MyConnection myConnection = new MyConnection();
@@ -69,28 +75,33 @@ public class MainThreads {
                             LOGGER.debug(" by ExecutorService ");
                         }));
 
+
         IntStream
-                .range(0, 100)
-                .boxed()
+                .range(0, 100).boxed()
                 .forEach(i -> executorService
                         .execute(() -> {
                             MyConnection myConnection = new MyConnection();
-                            CompletableFuture.runAsync(() -> {
+                            CompletableFuture<?> myFuture = CompletableFuture.runAsync(() -> {
                                         LOGGER.debug(" by CompletableFuture ");
                                         myConnection.update();
-                                    }
-                                    , executorService).thenRunAsync(() -> {
                                         LOGGER.debug(" by CompletableFuture ");
                                         myConnection.print();
                                         LOGGER.debug(" by CompletableFuture ");
                                         myConnection.read();
                                         LOGGER.debug(" by CompletableFuture ");
                                         myConnection.delete();
+                                    }
+                                    , executorService).thenRunAsync(() -> {
                                         LOGGER.debug(" by CompletableFuture ");
                                         myConnection.create();
                                     }
                                     , executorService);
+
+
+                            CompletableFuture<?> allOfFutures = CompletableFuture.allOf(myFuture);
+                            get(allOfFutures);
                         })
+
                 );
     }
 }

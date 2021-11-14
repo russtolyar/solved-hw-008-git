@@ -251,14 +251,9 @@ public class MainClass {
 
         List<Room> flatMapElements = flatsOne
                 .stream()
-                .flatMap(flat -> flat
-                        .getRooms()
-                        .stream())
-                .peek(room -> room
-                        .getWalls()
-                        .stream().
-                                filter(
-                                        wall -> wall.getElement().getHeight() > 2))
+                .flatMap(flat -> flat.getRooms().stream())
+                .peek(room -> room.getWalls().stream().
+                                filter(wall -> wall.getElement().getHeight() > 2))
                 .collect(Collectors.toList());
         LOGGER.debug("\n\n flatMapElements\n" + flatMapElements + "\n\n");
 

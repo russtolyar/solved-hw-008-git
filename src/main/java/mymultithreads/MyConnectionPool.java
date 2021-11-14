@@ -14,7 +14,6 @@ public class MyConnectionPool {
 
     private static volatile List<MyConnection> myConnectionListPool;
     private static MyConnectionPool connectionPoolInstance;
-    Integer myMaxConnections;
 
     private MyConnectionPool() { }
 
@@ -29,10 +28,17 @@ public class MyConnectionPool {
 
       public synchronized MyConnection getMyConnection() {
         LOGGER.debug("get My Connection");
+        if (myConnectionListPool.size() == 0 ) {
+            try {
+                Thread.currentThread().join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return myConnectionListPool.remove(myConnectionListPool.size() - 1);
     }
 
-    public synchronized void releaseConnection(MyConnection myConnection) {
+    public static synchronized void releaseConnection(MyConnection myConnection) {
         LOGGER.debug("Release Connection");
         myConnectionListPool.add(myConnection);
     }
